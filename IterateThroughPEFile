@@ -1,0 +1,37 @@
+section .text
+global _start
+
+_start:
+    ; Initialize loop counter
+    mov ecx, [pe_header_size]
+
+    ; Get pointer to first section header
+    mov ebx, [section_header_offset]
+
+loop:
+    ; Check if we've reached the end of the section headers
+    cmp ecx, 0
+    jle end_loop
+
+    ; Process section header
+    ; (Insert code here)
+
+    ; Move to next section header
+    add ebx, [section_header_size]
+    sub ecx, [section_header_size]
+
+    ; Continue loop
+    jmp loop
+
+end_loop:
+    ; (Insert code here)
+
+    ; Exit program
+    mov eax, 1
+    xor ebx, ebx
+    int 0x80
+
+section .data
+pe_header_size dd 0 ; Size of PE header
+section_header_offset dd 0 ; Offset of section header table
+section_header_size dw 0 ; Size of each section header
